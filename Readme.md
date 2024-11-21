@@ -24,7 +24,6 @@ Pick **one main quest** to complete:
    - Use any free dad-joke API of your choice. This one for example: [icanhazdadjoke](https://icanhazdadjoke.com/api).
    - Support **voice input** using browser APIs (e.g., Web Speech API).
    - Transcribe the voice input to text using the [Good Tape API](https://api.goodtape.io/docs). You should have gotten an API key in your email.
-   - Bonus: Implement voice output for the jokes.
 
 ---
 

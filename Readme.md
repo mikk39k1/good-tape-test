@@ -17,10 +17,8 @@ Crafting a meaningful test in the age of AI is a challenge, but we’re embracin
 
 ### **Main Quest**
 
-Pick **one main quest** to complete:
-
 1. **Voice-Activated Dad Joke Search Engine**
-   - Build an app where users can **speak a query** and get **dad jokes** in response.
+   - Build a web app where users can **speak a query** and get **dad jokes** in response.
    - Use any free dad-joke API of your choice. This one for example: [icanhazdadjoke](https://icanhazdadjoke.com/api).
    - Support **voice input** using browser APIs (e.g., Web Speech API).
    - Transcribe the voice input to text using the [Good Tape API](https://api.goodtape.io/docs). You should have gotten an API key in your email.

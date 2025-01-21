@@ -10,3 +10,10 @@ body {
     color-scheme: dark;
   }
 }
+
+@layer components {
+  .btn-general {
+    @apply px-4 py-2 rounded-md text-white font-semibold bg-color-3;
+  }
+}
+

@@ -21,4 +21,20 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://api.goodtape.io',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    },
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp'
+    }
+  },
+  optimizeDeps: {
+    exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util']
+  }
 });

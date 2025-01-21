@@ -4,15 +4,14 @@ export const useRecorder = () => {
   const [isRecording, setIsRecording] = useState(false)
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
   const [error, setError] = useState(false)
-  const recorderRef = useRef<any | null>(null)
+  const recorderRef = useRef<MediaRecorder | null>(null)
+  const streamRef = useRef<MediaStream | null>(null)
 
   useEffect(() => {
     return () => {
-      if (
-        recorderRef.current &&
-        recorderRef.current.state === 'recording'
-      ) {
-        recorderRef.current.stop()
+      stopRecording()
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop())
       }
     }
   }, [])
@@ -25,6 +24,8 @@ export const useRecorder = () => {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true
       })
+      streamRef.current = stream
+      
       const options = {
         mimeType: 'audio/webm'
       }
@@ -36,6 +37,8 @@ export const useRecorder = () => {
       rec.onstop = async () => {
         const blob = new Blob(chunks, { type: rec.mimeType })
         setAudioBlob(blob)
+        // Stop all tracks after recording
+        stream.getTracks().forEach(track => track.stop())
       }
 
       rec.onerror = () => {
@@ -52,10 +55,16 @@ export const useRecorder = () => {
   }
 
   const stopRecording = () => {
-    if (recorderRef.current?.state === 'recording') {
-        recorderRef.current.stop()
+    if (recorderRef.current && recorderRef.current.state === 'recording') {
+      recorderRef.current.stop()
+      setIsRecording(false)
     }
-    setIsRecording(false)
+    
+    // Ensure we stop all tracks
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop())
+      streamRef.current = null
+    }
   }
 
   return {

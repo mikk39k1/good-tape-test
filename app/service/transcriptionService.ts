@@ -4,7 +4,7 @@ export const transcriptionService = async (audioBlob: Blob) => {
   if (!audioBlob) return
 
   const GOOD_TAPE_API_URL = '/api/transcribe/sync'
-    const GOOD_TAPE_API_KEY = process.env.REACT_APP_GOOD_TA
+    const GOOD_TAPE_API_KEY = window.ENV.GOOD_TAPE_API
 
   const headers = {
     Authorization: GOOD_TAPE_API_KEY,

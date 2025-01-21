@@ -1,17 +1,7 @@
-import { useState, useRef } from "react";
+
 import type { MetaFunction } from "@remix-run/node";
-import { CiMicrophoneOn } from "react-icons/ci";
-import { CiMicrophoneOff } from "react-icons/ci";
-import fetchJoke from "~/utils/fetchJoke";
 import JokeEngine from "~/components/JokeEngine";
 
-
-declare global {
-  interface Window {
-    SpeechRecognition: any;
-    webkitSpeechRecognition: any;
-  }
-}
 
 
 export const meta: MetaFunction = () => {

@@ -4,10 +4,18 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
 import "./tailwind.css";
+import { ENV } from "./types/env";
+
+declare global {
+  interface Window {
+    ENV: ENV;
+  }
+}
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -22,7 +30,9 @@ export const links: LinksFunction = () => [
   },
 ];
 
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const env = useLoaderData();
   return (
     <html lang="en">
       <head>

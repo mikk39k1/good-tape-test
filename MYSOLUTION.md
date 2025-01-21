@@ -34,8 +34,26 @@ I still wanted to challenge myself even though i was pressed on time, and that i
 I chose to work on the following side-quests.
 - `5. Custom Feature`
 - `1. Styling Challenge`
-- `3. Implement Voice Output for the Jokes`
+- `3. Implement voice output for the jokes`
 
 ### **5. Custom Feature**:
 I thought it would be fun to try and work with an AI that would be able to take a full conversation from the trascript text or a full sentence, and boil that down into one single word that incompases the theme of the sentence. So for example a user being able to say "Can you tell me a joke about a spider?" And then the AI would take that transcript and boil it down to the most important word in that sentence, and use that as a search term for the joke API.
 
+### **1. Styling Challenge**:
+I love styling and designing, and that's also one of the reasons i am not fully satisfied with this particular solution. I used a color pallete from [coloo](https://coolors.co) And added the colors i knew i needed to use to the tailwind.config.ts so i had easy access to then throughout the solution.
+```typescript  
+colors: {
+    color: {
+      1: '#F1FAEE',
+      2: '#A8DADC',
+      3: '#457B9D',
+      4: '#1D3557',
+      5: '#E63946',
+    },
+      }
+```
+![pallete](image.png)
+
+
+### **3. Implement voice output for the jokes**:
+I wanted to try and implement this way of outputting the text to speech, since it felt like a good feature to work on when the user is able to speak to get the jokes, they should also be able to take the text and get it read to them. My thought was to actually be able to take the text, and have a selector to choose a language, available from the speechSynthesis library, take the text and translate it and then get it read in another alnguage, but i simply didn't have the time. But that would be a cool and fun deature to try and work on.

@@ -8,11 +8,19 @@ import Jokes from "../Jokes"
 import { motion } from "framer-motion"
 import { CiMicrophoneOff, CiMicrophoneOn } from "react-icons/ci"
 import { aiService } from "~/service/aiService"
+import AnimatedText from "../AnimatedText"
+import { Transcription } from "~/types/Transcription"
+
 
 
 const JokeEngine = () => {
   const [searchValue, setSearchValue] = useState('')
   const [jokes, setJokes] = useState<Joke[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [transcription, setTranscription] = useState<Transcription>()
+  const [aiShortenedText, setAiShortenedText] = useState('')
+
+
   const {
     isRecording,
     audioBlob,
@@ -34,26 +42,26 @@ const JokeEngine = () => {
 
   const handleUpload = async () => {
     if (!audioBlob) return
-
+    setIsLoading(true)
     const transcription = await transcriptionService(audioBlob)
-    console.log('Transcription:', transcription)
+    console.log("Transcription: ", transcription)
+    setTranscription(transcription)
     aiService(transcription).then((data) => {
       if (data) {
         getSearchedJoke(data)
       }
+      setAiShortenedText(data ?? '')
     })
     setAudioBlob(null)
+    setIsLoading(false)
   }
 
   return (
-    <div className="p-4 container mx-auto">
-
-
+    <div className="w-full p-4">
       <form onSubmit={handleSubmit} className="flex items-center gap-4">
-        { }
         <Input
           type="text"
-          placeholder="Search for dad jokes"
+          placeholder="Search for dad jokes..."
           value={searchValue}
           onChange={e => {
             setSearchValue(e.target.value)
@@ -74,10 +82,6 @@ const JokeEngine = () => {
             className="bg-color-5 p-4 rounded-full relative"
             onClick={() => {
               stopRecording();
-              // Add a small delay to ensure the audioBlob is set
-              setTimeout(() => {
-                handleUpload();
-              }, 500);
             }}
             aria-label="Stop Recording"
             animate={{
@@ -101,12 +105,46 @@ const JokeEngine = () => {
             <CiMicrophoneOff className="fill-color-1 relative z-10" size={36} />
           </motion.button>
         )}
-
       </form>
 
-      <Jokes jokes={jokes} />
+      {
+        jokes && jokes.length > 0 && (
+          <div className="my-4">
+            <h2 className="text-color-3">Search Results:</h2>
+            <Jokes jokes={jokes} />
+          </div>
+        )
+      }
 
 
+      {audioBlob && !isLoading && (
+        <div className='w-full sm:max-w-32'>
+          <button onClick={handleUpload} className="btn-general">Upload</button>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="flex items-center justify-center">
+          <AnimatedText text="Uploading..." />
+        </div>
+      )}
+
+      <div className="flex w-full justify-between">
+        {transcription && (
+          <div className="mt-4">
+            <h2 className="text-color-3">Transcription:</h2>
+            <p className="text-color-4">{transcription.text}</p>
+          </div>
+        )}
+
+        {aiShortenedText && (
+          <div className="mt-4">
+            <h2 className="text-color-3">AI Suggested Search value:</h2>
+            <p className="text-color-4">{aiShortenedText}</p>
+          </div>
+        )}
+
+      </div>
 
 
     </div>
@@ -114,7 +152,3 @@ const JokeEngine = () => {
 }
 
 export default JokeEngine;
-
-function loadStripe(STRIPE_PUBLIC_KEY: any) {
-  throw new Error("Function not implemented.")
-}

@@ -3,8 +3,8 @@ import axios from 'axios'
 export const transcriptionService = async (audioBlob: Blob) => {
   if (!audioBlob) return
 
-  const GOOD_TAPE_API_URL = '/api/transcribe/sync'
-    const GOOD_TAPE_API_KEY = window.ENV.GOOD_TAPE_API
+  const url = '/api/transcribe/sync'
+  const GOOD_TAPE_API_KEY = import.meta.env.VITE_GOOD_TAPE_API_KEY;
 
   const headers = {
     Authorization: GOOD_TAPE_API_KEY,
@@ -17,7 +17,7 @@ export const transcriptionService = async (audioBlob: Blob) => {
   formData.append('languageCode', 'en')
 
   try {
-    const response = await axios.post(GOOD_TAPE_API_URL, formData, { headers })
+    const response = await axios.post(url, formData, { headers })
     return response.data
   } catch (err) {
     console.error('Error uploading audio:', err)

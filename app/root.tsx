@@ -1,3 +1,4 @@
+// app/root.tsx
 import {
   Links,
   Meta,
@@ -6,10 +7,12 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 
 import "./tailwind.css";
 import { ENV } from "./types/env";
+import { getEnv } from "./env.server";
 
 declare global {
   interface Window {
@@ -30,9 +33,15 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export const loader: LoaderFunction = async () => {
+  return json({
+    ENV: getEnv(),
+  });
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const env = useLoaderData();
+  const data = useLoaderData<{ ENV: ENV }>();
+
   return (
     <html lang="en">
       <head>
@@ -45,6 +54,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
       </body>
     </html>
   );

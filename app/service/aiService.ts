@@ -5,7 +5,7 @@ export const aiService = async (transcription: string) => {
 
   const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
-    apiKey: "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",
+    apiKey: "",
 });
 
 const completion = await openai.chat.completions.create({

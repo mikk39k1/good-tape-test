@@ -7,6 +7,7 @@ cd <repository-folder>
 ```
 
 **Setup local env variables called:** 
+create a local .env file in the root of the project, and add these Variable names, and their values
 `VITE_OPENAI_API_KEY`
 `VITE_GOOD_TAPE_API_KEY`
 

@@ -9,7 +9,7 @@ export const transcriptionService = async (audioBlob: Blob) => {
   const headers = {
     Authorization: GOOD_TAPE_API_KEY,
     'Content-Type': 'multipart/form-data'
-  }
+  };
 
   const formData = new FormData()
 
@@ -22,4 +22,4 @@ export const transcriptionService = async (audioBlob: Blob) => {
   } catch (err) {
     console.error('Error uploading audio:', err)
   }
-}
+};

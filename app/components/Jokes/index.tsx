@@ -9,11 +9,11 @@ type JokesProps = {
 const Jokes = ({ jokes }: JokesProps) => {
 
     return (
-        <>
+        <div className="w-full max-h-[500px] overflow-y-auto">
             {jokes.map(joke => (
                 <SingleJoke joke={joke} />
             ))}
-        </>
+        </div>
     );
 }
 

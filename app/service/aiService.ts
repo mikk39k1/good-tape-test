@@ -8,7 +8,7 @@ export const aiService = async (transcription: string) => {
   const openai = new OpenAI({
     apiKey: OPENAI_API_KEY,
     dangerouslyAllowBrowser: true
-  })
+  });
 
   try {
     const transcriptionText = typeof transcription === 'object'
@@ -27,7 +27,7 @@ export const aiService = async (transcription: string) => {
           content: transcriptionText
         }
       ]
-    })
+    });
 
     return completion.choices[0].message.content
   } catch (error: any) {
@@ -35,5 +35,5 @@ export const aiService = async (transcription: string) => {
       console.error('Error details:', error.response.data)
     }
     throw error
-  }
-}
+  };
+};
